@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudySync", "StudySync.csproj", "{11C7BEB3-C131-D822-8649-8D03FD1095B3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{11C7BEB3-C131-D822-8649-8D03FD1095B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11C7BEB3-C131-D822-8649-8D03FD1095B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11C7BEB3-C131-D822-8649-8D03FD1095B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11C7BEB3-C131-D822-8649-8D03FD1095B3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D7263B62-DC3C-4822-A14D-CFF46CBFC7E5}
+	EndGlobalSection
+EndGlobal
