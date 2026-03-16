@@ -1,0 +1,5 @@
+{
+  "appService.preDeployTask": "publish-release",
+  "appService.deploySubpath": "bin\\Release\\net9.0\\publish",
+  "appService.defaultWebAppToDeploy": "/subscriptions/08df0982-b4f9-4b58-8421-59e465ed8766/resourceGroups/CSA-2526-StudySync/providers/Microsoft.Web/sites/csa-2526-studysync-api"
+}
