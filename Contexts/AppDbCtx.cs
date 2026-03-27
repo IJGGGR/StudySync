@@ -11,5 +11,6 @@ namespace StudySync.Contexts
     {
         public DbSet<MdlUser> TblUser { get; set; }
         public DbSet<MdlBlogItem> TblBlogItem { get; set; }
+        public DbSet<MdlTimeRecord> TblTimeRecord { get; set; }
     }
 }

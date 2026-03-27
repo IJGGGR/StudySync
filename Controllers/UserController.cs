@@ -15,12 +15,6 @@ namespace StudySync.Controllers
     {
         private readonly SvcUser _svc = svc;
 
-        [HttpPost("Create")]
-        public bool Create(DtoAccount UserToAdd)
-        {
-            return _svc.Create(UserToAdd);
-        }
-
         [HttpGet("GetAll")]
         public IEnumerable<MdlUser> GetAll()
         {
@@ -40,21 +34,27 @@ namespace StudySync.Controllers
         }
 
         [HttpPost("Login")]
-        public IActionResult Login(DtoAccount dto)
+        public ActionResult<string> Login(DtoAccount dto)
         {
             return _svc.Login(dto);
         }
 
-        [HttpPost("Update")]
+        [HttpPost("Create")]
+        public ActionResult<bool> Create(DtoAccount dto)
+        {
+            return _svc.Create(dto);
+        }
+
+        [HttpPut("Update")]
         public bool Update(int id, string username)
         {
             return _svc.Update(id, username);
         }
 
-        [HttpPost("Delete")]
-        public bool Delete(string username)
+        [HttpDelete("Delete")]
+        public bool Delete(int id)
         {
-            return _svc.Delete(username);
+            return _svc.Delete(id);
         }
     }
 }
