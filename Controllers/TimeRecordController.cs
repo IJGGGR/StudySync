@@ -39,6 +39,12 @@ namespace StudySync.Controllers
         //     return Ok(_svc.GetAllByDate(date));
         // }
 
+        [HttpGet("GetAllByCategory/{Category}")]
+        public ActionResult<IEnumerable<MdlTimeRecord>> GetAllByCategory(string Category)
+        {
+            return Ok(_svc.GetAllByCategory(Category));
+        }
+
         [HttpGet("GetAllByTag/{Tag}")]
         public ActionResult<IEnumerable<MdlTimeRecord>> GetAllByTag(string Tag)
         {
