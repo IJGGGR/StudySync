@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace StudySync.Models.DTOs
 {
-    public class DtoTimeRecord
+    public class RqtTimeRecord
     {
         public int UserId { get; set; }
         public DateTime Started { get; set; }

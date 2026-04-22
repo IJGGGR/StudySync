@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace StudySync.Models.DTOs
 {
-    public class DtoSaltHash
+    public class RqtFriend
     {
-        public string? Salt { get; set; }
-        public string? Hash { get; set; }
+        public required string UsernameSelf { get; set; }
+        public required string UsernameThem { get; set; }
     }
 }

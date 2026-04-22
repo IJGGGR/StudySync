@@ -90,16 +90,16 @@ namespace StudySync.Services
 
         // SET =============================================================================================
 
-        internal ActionResult<MdlTimeRecord> Create(DtoTimeRecord dto)
+        internal ActionResult<MdlTimeRecord> Create(RqtTimeRecord rqt)
         {
             var obj = new MdlTimeRecord {
                 Id           = 0,
-                UserId       = dto.UserId,
-                Started      = dto.Started,
-                Stopped      = dto.Stopped,
-                Length       = dto.Stopped - dto.Started,
-                Category     = dto.Category,
-                IsProductive = dto.IsProductive
+                UserId       = rqt.UserId,
+                Started      = rqt.Started,
+                Stopped      = rqt.Stopped,
+                Length       = rqt.Stopped - rqt.Started,
+                Category     = rqt.Category,
+                IsProductive = rqt.IsProductive
             };
             _ctx.Add(obj);
             var num = _ctx.SaveChanges();

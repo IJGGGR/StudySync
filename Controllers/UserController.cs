@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -16,45 +17,166 @@ namespace StudySync.Controllers
         private readonly SvcUser _svc = svc;
 
         [HttpGet("GetAll")]
-        public IEnumerable<MdlUser> GetAll()
+        public ActionResult<IEnumerable<RspUser>> GetAll()
         {
-            return _svc.GetAll();
+            try
+            {
+                var rsp = _svc.GetAll().Select(e => new RspUser
+                {
+                    Id = e.Id,
+                    Username = e.Username,
+                    OutgoingRequests = e.OutgoingRequests,
+                    IncomingRequests = e.IncomingRequests,
+                    Friends = e.Friends,
+                });
+
+                return Ok(rsp);
+            }
+            catch (Exception exc)
+            {
+                return BadRequest(exc.Message);
+            }
         }
 
         [HttpGet("GetOneById")]
-        public MdlUser? GetOneById(int id)
+        public ActionResult<RspUser> GetOneById(int id)
         {
-            return _svc.GetOneById(id);
+            try
+            {
+                var ent = _svc.GetOneById(id);
+
+                if (ent == null)
+                {
+                    return NotFound($"Id '{id}' not found.");
+                }
+
+                var rsp = new RspUser
+                {
+                    Id = ent.Id,
+                    Username = ent.Username,
+                    OutgoingRequests = ent.OutgoingRequests,
+                    IncomingRequests = ent.IncomingRequests,
+                    Friends = ent.Friends,
+                };
+
+                return Ok(rsp);
+            }
+            catch (Exception exc)
+            {
+                return BadRequest(exc.Message);
+            }
         }
 
         [HttpGet("GetOneByUsername")]
-        public MdlUser? GetOneByUsername(string username)
+        public ActionResult<RspUser> GetOneByUsername(string username)
         {
-            return _svc.GetOneByUsername(username);
+            try
+            {
+                var ent = _svc.GetOneByUsername(username);
+
+                if (ent == null)
+                {
+                    return NotFound($"Username '{username}' not found.");
+                }
+
+                var rsp = new RspUser
+                {
+                    Id = ent.Id,
+                    Username = ent.Username,
+                    OutgoingRequests = ent.OutgoingRequests,
+                    IncomingRequests = ent.IncomingRequests,
+                    Friends = ent.Friends,
+                };
+
+                return Ok(rsp);
+            }
+            catch (Exception exc)
+            {
+                return BadRequest(exc.Message);
+            }
         }
 
         [HttpPost("Login")]
-        public ActionResult<string> Login(DtoAccount dto)
+        public ActionResult<string> Login([FromBody] RqtAccount rqt)
         {
-            return _svc.Login(dto);
+            try
+            {
+                var jwt = _svc.Login(rqt);
+
+                return Ok(jwt);
+            }
+            catch (KeyNotFoundException exc)
+            {
+                return NotFound(exc.Message);
+            }
+            catch (Exception exc)
+            {
+                return BadRequest(exc.Message);
+            }
         }
 
         [HttpPost("Create")]
-        public ActionResult<bool> Create(DtoAccount dto)
+        public ActionResult<RspUser> Create([FromBody] RqtAccount rqt)
         {
-            return _svc.Create(dto);
+            try
+            {
+                var ent = _svc.Create(rqt);
+
+                var rsp = new RspUser
+                {
+                    Id = ent.Id,
+                    Username = ent.Username,
+                };
+
+                return CreatedAtAction(nameof(GetOneById), new { rsp.Id }, rsp);
+            }
+            catch (Exception exc)
+            {
+                return BadRequest(exc.Message);
+            }
         }
 
         [HttpPut("Update")]
-        public bool Update(int id, string username)
+        public ActionResult<RspUser> Update(int id, string username)
         {
-            return _svc.Update(id, username);
+            try
+            {
+                var ent = _svc.Update(id, username);
+
+                return Ok(ent);
+            }
+            catch (KeyNotFoundException exc)
+            {
+                return NotFound(exc.Message);
+            }
+            catch (Exception exc)
+            {
+                return BadRequest(exc.Message);
+            }
         }
 
         [HttpDelete("Delete")]
-        public bool Delete(int id)
+        public ActionResult Delete(int id)
         {
-            return _svc.Delete(id);
+            try
+            {
+                var res = _svc.Delete(id);
+
+                if (!res)
+                {
+                    throw new UnreachableException("UNREACHABLE.");
+                }
+
+                return NoContent();
+            }
+            catch (KeyNotFoundException exc)
+            {
+                return NotFound(exc.Message);
+            }
+            catch (Exception exc)
+            {
+                return BadRequest(exc.Message);
+            }
         }
     }
 }

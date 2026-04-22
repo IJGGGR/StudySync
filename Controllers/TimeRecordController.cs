@@ -34,7 +34,7 @@ namespace StudySync.Controllers
         }
 
         // [HttpGet("GetAllByDate/{date}")]
-        // public ActionResult<IEnumerable<MdlBlogItem>> GetAllByDate(string date)
+        // public ActionResult<IEnumerable<MdlTimeRecord>> GetAllByDate(string date)
         // {
         //     return Ok(_svc.GetAllByDate(date));
         // }
@@ -46,36 +46,27 @@ namespace StudySync.Controllers
         }
 
         [HttpGet("GetAllByIsProductive/{IsProductive}")]
-        public ActionResult<IEnumerable<MdlBlogItem>> GetAllByIsProductive(bool IsProductive)
+        public ActionResult<IEnumerable<MdlTimeRecord>> GetAllByIsProductive(bool IsProductive)
         {
             return Ok(_svc.GetAllByIsProductive(IsProductive));
         }
 
         [HttpPost("Create")]
-        public ActionResult<MdlTimeRecord> Create(
-            [FromBody]
-            DtoTimeRecord dto
-        )
+        public ActionResult<MdlTimeRecord> Create([FromBody] RqtTimeRecord rqt)
         {
-            return _svc.Create(dto);
+            return _svc.Create(rqt);
         }
 
         // [HttpPut("Update")]
-        // public ActionResult<MdlTimeRecord> Update(
-        //     [FromBody]
-        //     MdlTimeRecord mdl
-        // )
+        // public ActionResult<MdlTimeRecord> Update([FromBody] RqtTimeRecord rqt)
         // {
-        //     return _svc.Update(mdl);
+        //     return _svc.Update(rqt);
         // }
 
         // [HttpDelete("Delete")]
-        // public ActionResult Delete(
-        //     [FromBody]
-        //     MdlTimeRecord mdl
-        // )
+        // public ActionResult Delete([FromBody] RqtTimeRecord rqt)
         // {
-        //     return _svc.Delete(mdl);
+        //     return _svc.Delete(rqt);
         // }
     }
 }

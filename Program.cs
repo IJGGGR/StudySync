@@ -12,7 +12,7 @@ var builder = WebApplication.CreateBuilder(args);;
 
 builder.Services.AddCors(o => { o.AddPolicy("AllowAny", p => { p.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin(); }); });
 
-var key = builder.Configuration["JWT:Key"] ?? throw new Exception("NULL JWT KEY");
+var key = builder.Configuration["JWT:Key"] ?? throw new Exception("NULL JWT KEY.");
 builder.Services.AddAuthentication(o => {
     o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -32,7 +32,7 @@ builder.Services.AddAuthentication(o => {
 
 builder.Services.AddDbContext<AppDbCtx>(o => o.UseSqlServer(builder.Configuration.GetConnectionString("DatabaseConnection")));
 
-builder.Services.AddScoped<SvcBlogItem>();
+// builder.Services.AddScoped<SvcBlogItem>();
 builder.Services.AddScoped<SvcTimeRecord>();
 builder.Services.AddScoped<SvcUser>();
 

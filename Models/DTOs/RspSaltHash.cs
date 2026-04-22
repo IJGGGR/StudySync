@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace StudySync.Models.DTOs
 {
-    public class DtoAccount
+    public class RspSaltHash
     {
-        public string? Username { get; set; }
-        public string? Password { get; set; }
+        public required string Salt { get; set; }
+        public required string Hash { get; set; }
     }
 }
