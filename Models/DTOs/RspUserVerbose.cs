@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 
 namespace StudySync.Models.DTOs
 {
-    public class RspUser
+    public class RspUserVerbose
     {
         public int Id { get; set; }
         public required string Username { get; set; }
-        public int[] OutgoingRequests { get; set; } = [];
-        public int[] IncomingRequests { get; set; } = [];
-        public int[] Friends { get; set; } = [];
+        public RspUserTerse[] OutgoingRequests { get; set; } = [];
+        public RspUserTerse[] IncomingRequests { get; set; } = [];
+        public RspUserTerse[] Friends { get; set; } = [];
     }
 }

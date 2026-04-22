@@ -247,6 +247,18 @@ namespace StudySync.Services
             return true;
         }
 
+        internal RspUserTerse TerseGetOneById(int id)
+        {
+            var ent = GetOneById(id);
+
+            if (ent == null)
+            {
+                return new RspUserTerse() { Id = id, Username = "n/a" };
+            }
+
+            return new RspUserTerse() { Id = id, Username = ent.Username };
+        }
+
         /// <exception cref="KeyNotFoundException"></exception>
         /// <exception cref="InvalidOperationException"></exception>
         /// <exception cref="Exception"></exception>

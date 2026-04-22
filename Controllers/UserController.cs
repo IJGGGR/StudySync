@@ -96,6 +96,64 @@ namespace StudySync.Controllers
             }
         }
 
+        [HttpGet("Verbose/GetOneById/{Id}")]
+        public ActionResult<RspUserVerbose> VerboseGetOneById(int Id)
+        {
+            try
+            {
+                var ent = _svc.GetOneById(Id);
+
+                if (ent == null)
+                {
+                    return NotFound($"Id '{Id}' not found.");
+                }
+
+                var rsp = new RspUserVerbose
+                {
+                    Id = ent.Id,
+                    Username = ent.Username,
+                    OutgoingRequests = [ .. ent.OutgoingRequests.Select(e => _svc.TerseGetOneById(e)) ],
+                    IncomingRequests = [ .. ent.IncomingRequests.Select(e => _svc.TerseGetOneById(e)) ],
+                    Friends = [ .. ent.Friends.Select(e => _svc.TerseGetOneById(e)) ],
+                };
+
+                return Ok(rsp);
+            }
+            catch (Exception exc)
+            {
+                return BadRequest(exc.Message);
+            }
+        }
+
+        [HttpGet("Verbose/GetOneByUsername/{Username}")]
+        public ActionResult<RspUserVerbose> VerboseGetOneByUsername(string Username)
+        {
+            try
+            {
+                var ent = _svc.GetOneByUsername(Username);
+
+                if (ent == null)
+                {
+                    return NotFound($"Username '{Username}' not found.");
+                }
+
+                var rsp = new RspUserVerbose
+                {
+                    Id = ent.Id,
+                    Username = ent.Username,
+                    OutgoingRequests = [ .. ent.OutgoingRequests.Select(e => _svc.TerseGetOneById(e)) ],
+                    IncomingRequests = [ .. ent.IncomingRequests.Select(e => _svc.TerseGetOneById(e)) ],
+                    Friends = [ .. ent.Friends.Select(e => _svc.TerseGetOneById(e)) ],
+                };
+
+                return Ok(rsp);
+            }
+            catch (Exception exc)
+            {
+                return BadRequest(exc.Message);
+            }
+        }
+
         [HttpPost("Login")]
         public ActionResult<string> Login([FromBody] RqtAccount rqt)
         {
