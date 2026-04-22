@@ -133,7 +133,7 @@ namespace StudySync.Services
             return jwt;
         }
 
-        internal static RspSaltHash FnGenSaltHash(string password)
+        internal static DtoSaltHash FnGenSaltHash(string password)
         {
             var salt = RandomNumberGenerator.GetBytes(64);
             var hash = Rfc2898DeriveBytes.Pbkdf2(
@@ -143,7 +143,7 @@ namespace StudySync.Services
                 HashAlgorithmName.SHA256,
                 32
             );
-            var res = new RspSaltHash
+            var res = new DtoSaltHash
             {
                 Salt = Convert.ToBase64String(salt),
                 Hash = Convert.ToBase64String(hash)
@@ -175,7 +175,7 @@ namespace StudySync.Services
                 issuer: Constants.API_URL,
                 audience: Constants.API_URL,
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(5),
+                expires: DateTime.Now.AddHours(3),
                 signingCredentials: new SigningCredentials(new SymmetricSecurityKey(buf), SecurityAlgorithms.HmacSha256)
             );
             var jwt = new JwtSecurityTokenHandler().WriteToken(opt);
@@ -250,20 +250,20 @@ namespace StudySync.Services
         /// <exception cref="KeyNotFoundException"></exception>
         /// <exception cref="InvalidOperationException"></exception>
         /// <exception cref="Exception"></exception>
-        internal bool FriendAcceptOrCreate(RqtFriend rqt)
+        internal bool FriendAcceptOrCreate(string SelfUsername, string ThemUsername)
         {
-            var self = GetOneByUsername(rqt.UsernameSelf);
+            var self = GetOneByUsername(SelfUsername);
 
             if (self == null)
             {
-                throw new KeyNotFoundException($"Username '{rqt.UsernameSelf}' not found.");
+                throw new KeyNotFoundException($"Username '{SelfUsername}' not found.");
             }
 
-            var them = GetOneByUsername(rqt.UsernameThem);
+            var them = GetOneByUsername(ThemUsername);
 
             if (them == null)
             {
-                throw new KeyNotFoundException($"Username '{rqt.UsernameThem}' not found.");
+                throw new KeyNotFoundException($"Username '{ThemUsername}' not found.");
             }
 
             var sID = self.Id;
@@ -346,20 +346,20 @@ namespace StudySync.Services
         /// <exception cref="KeyNotFoundException"></exception>
         /// <exception cref="InvalidOperationException"></exception>
         /// <exception cref="Exception"></exception>
-        internal bool FriendRejectOrDelete(RqtFriend rqt)
+        internal bool FriendRejectOrDelete(string SelfUsername, string ThemUsername)
         {
-            var self = GetOneByUsername(rqt.UsernameSelf);
+            var self = GetOneByUsername(SelfUsername);
 
             if (self == null)
             {
-                throw new KeyNotFoundException($"Username '{rqt.UsernameSelf}' not found.");
+                throw new KeyNotFoundException($"Username '{SelfUsername}' not found.");
             }
 
-            var them = GetOneByUsername(rqt.UsernameThem);
+            var them = GetOneByUsername(ThemUsername);
 
             if (them == null)
             {
-                throw new KeyNotFoundException($"Username '{rqt.UsernameThem}' not found.");
+                throw new KeyNotFoundException($"Username '{ThemUsername}' not found.");
             }
 
             var sID = self.Id;

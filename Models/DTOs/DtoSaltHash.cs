@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace StudySync.Models.DTOs
 {
-    public class RspSaltHash
+    public class DtoSaltHash
     {
         public required string Salt { get; set; }
         public required string Hash { get; set; }

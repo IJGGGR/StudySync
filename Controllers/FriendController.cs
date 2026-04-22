@@ -19,7 +19,7 @@ namespace StudySync.Controllers
         {
             try
             {
-                var res = _svc.FriendAcceptOrCreate(new RqtFriend { UsernameSelf = SelfUsername, UsernameThem = ThemUsername });
+                var res = _svc.FriendAcceptOrCreate(SelfUsername, ThemUsername);
 
                 return Ok(res ? "Accept" : "Create");
             }
@@ -38,7 +38,7 @@ namespace StudySync.Controllers
         {
             try
             {
-                var res = _svc.FriendRejectOrDelete(new RqtFriend { UsernameSelf = SelfUsername, UsernameThem = ThemUsername });
+                var res = _svc.FriendRejectOrDelete(SelfUsername, ThemUsername);
 
                 return Ok(res ? "Reject" : "Delete");
             }

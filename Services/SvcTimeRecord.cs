@@ -62,9 +62,9 @@ namespace StudySync.Services
         //     return res;
         // }
 
-        internal IEnumerable<MdlTimeRecord> GetAllByCategory(string? category)
+        internal IEnumerable<MdlTimeRecord> GetAllByTag(string? tag)
         {
-            if (string.IsNullOrWhiteSpace(category))
+            if (string.IsNullOrWhiteSpace(tag))
             {
                 return [];
             }
@@ -76,7 +76,7 @@ namespace StudySync.Services
             //     return [];
             // }
 
-            var res = _ctx.TblTimeRecord.Where(e => e.Category == category);
+            var res = _ctx.TblTimeRecord.Where(e => e.Tags.Any(e => e == tag));
 
             return res;
         }
@@ -98,7 +98,7 @@ namespace StudySync.Services
                 Started      = rqt.Started,
                 Stopped      = rqt.Stopped,
                 Length       = rqt.Stopped - rqt.Started,
-                Category     = rqt.Category,
+                Tags         = rqt.Tags,
                 IsProductive = rqt.IsProductive
             };
             _ctx.Add(obj);
