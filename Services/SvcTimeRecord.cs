@@ -43,6 +43,11 @@ namespace StudySync.Services
 
         internal MdlTimeRecord? GetOneById(int id)
         {
+            if (id < 1)
+            {
+                throw new ArgumentException("Invalid Id.");
+            }
+
             var res = _ctx.TblTimeRecord.FirstOrDefault(e => e.Id == id);
 
             return res;
@@ -117,9 +122,11 @@ namespace StudySync.Services
                 Started      = rqt.Started,
                 Stopped      = rqt.Stopped,
                 Length       = rqt.Stopped - rqt.Started,
+                Goal         = rqt.Goal,
                 Category     = rqt.Category,
                 Tags         = rqt.Tags,
-                IsProductive = rqt.IsProductive
+                IsProductive = rqt.IsProductive,
+                IsDeleted    = false,
             };
             _ctx.Add(obj);
             var num = _ctx.SaveChanges();

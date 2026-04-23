@@ -12,8 +12,10 @@ namespace StudySync.Models
         public DateTime Started { get; set; }
         public DateTime Stopped { get; set; }
         public TimeSpan Length { get; set; }
+        public TimeSpan Goal { get; set; }
         public required string Category { get; set; }
         public string[] Tags { get; set; } = [];
         public bool IsProductive { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }
