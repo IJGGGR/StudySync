@@ -24,16 +24,6 @@ namespace StudySync.Services
 
         // TODO: create a complex getter so that i don't have a bunch of disjointed ones
 
-        internal ActionResult<T> Wrapper<T>(T? arg)
-        {
-            if (arg == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(arg);
-        }
-
         internal IEnumerable<MdlTimeRecord> GetAll()
         {
             var res = _ctx.TblTimeRecord;
@@ -71,7 +61,7 @@ namespace StudySync.Services
         {
             if (string.IsNullOrWhiteSpace(category))
             {
-                return [];
+                throw new ArgumentException("Invalid category.");
             }
 
             // category = category.Trim().ToLower();
@@ -90,7 +80,7 @@ namespace StudySync.Services
         {
             if (string.IsNullOrWhiteSpace(tag))
             {
-                return [];
+                throw new ArgumentException("Invalid tag.");
             }
 
             // category = category.Trim().ToLower();
@@ -114,90 +104,65 @@ namespace StudySync.Services
 
         // SET =============================================================================================
 
-        internal ActionResult<MdlTimeRecord> Create(RqtTimeRecord rqt)
+        internal MdlTimeRecord Create(RqtTimeRecord rqt)
         {
-            var obj = new MdlTimeRecord {
-                Id           = 0,
-                UserId       = rqt.UserId,
-                Started      = rqt.Started,
-                Stopped      = rqt.Stopped,
-                Length       = rqt.Stopped - rqt.Started,
-                Goal         = rqt.Goal,
-                Category     = rqt.Category,
-                Tags         = rqt.Tags,
-                IsProductive = rqt.IsProductive,
-                IsDeleted    = false,
-            };
-            _ctx.Add(obj);
+            var obj = new MdlTimeRecord(rqt);
+            _ctx.TblTimeRecord.Add(obj);
             var num = _ctx.SaveChanges();
 
-            if (num < 1)
+            if (num != 1)
             {
-                return BadRequest();
+                throw new Exception($"DATABASE SAVE ERROR. {num} OUT OF 1 CHANGES WERE SAVED.");
             }
 
-            return CreatedAtAction(
-                nameof(GetOneById), // * this may want the controller endpoint function instead
-                new { Id = obj.Id },
-                obj
-            );
+            return obj;
         }
 
-        // internal ActionResult<MdlBlogItem> Update(MdlBlogItem mdl)
-        // {
-        //     var ent = GetOneById(mdl.Id);
+        internal MdlTimeRecord Update(int id, RqtTimeRecord rqt)
+        {
+            var ent = GetOneById(id);
 
-        //     if (ent == null)
-        //     {
-        //         return BadRequest();
-        //     }
+            if (ent == null)
+            {
+                throw new KeyNotFoundException($"Id '{id}' not found.");
+            }
 
-        //     // ent.Id = mdl.Id;
-        //     // ent.UserId = mdl.UserId;
-        //     ent.PublisherName = mdl.PublisherName;
-        //     ent.Title = mdl.Title;
-        //     ent.Image = mdl.Image;
-        //     ent.Description = mdl.Description;
-        //     ent.Date = mdl.Date;
-        //     ent.Category = mdl.Category;
-        //     ent.Tags = mdl.Tags;
-        //     ent.IsPublished = mdl.IsPublished;
-        //     ent.IsDeleted = mdl.IsDeleted;
-        //     _ctx.Update(ent);
-        //     var num = _ctx.SaveChanges();
+            ent.Update(rqt);
+            _ctx.TblTimeRecord.Update(ent);
+            var num = _ctx.SaveChanges();
 
-        //     if (num < 1)
-        //     {
-        //         return BadRequest();
-        //     }
+            if (num != 1)
+            {
+                throw new Exception($"DATABASE SAVE ERROR. {num} OUT OF 1 CHANGES WERE SAVED.");
+            }
 
-        //     return Ok(ent);
-        // }
+            return ent;
+        }
 
-        // internal ActionResult Delete(MdlBlogItem mdl)
-        // {
-        //     var ent = GetOneById(mdl.Id);
+        internal bool Delete(int id)
+        {
+            var ent = GetOneById(id);
 
-        //     if (ent == null)
-        //     {
-        //         return BadRequest();
-        //     }
+            if (ent == null)
+            {
+                throw new KeyNotFoundException($"Id '{id}' not found.");
+            }
 
-        //     if (ent.IsDeleted)
-        //     {
-        //         return BadRequest(); // already "deleted"
-        //     }
+            if (ent.IsDeleted)
+            {
+                return false;
+            }
 
-        //     ent.IsDeleted = true;
-        //     _ctx.Update(ent);
-        //     var num = _ctx.SaveChanges();
+            ent.IsDeleted = true;
+            _ctx.TblTimeRecord.Update(ent);
+            var num = _ctx.SaveChanges();
 
-        //     if (num < 1)
-        //     {
-        //         return BadRequest();
-        //     }
+            if (num != 1)
+            {
+                throw new Exception($"DATABASE SAVE ERROR. {num} OUT OF 1 CHANGES WERE SAVED.");
+            }
 
-        //     return NoContent();
-        // }
+            return true;
+        }
     }
 }

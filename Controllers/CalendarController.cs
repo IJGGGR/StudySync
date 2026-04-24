@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -12,12 +11,12 @@ namespace StudySync.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class TimeRecordController(SvcTimeRecord svc) : ControllerBase
+    public class CalendarController(SvcCalendar svc) : ControllerBase
     {
-        private readonly SvcTimeRecord _svc = svc;
+        public readonly SvcCalendar _svc = svc;
 
         [HttpGet("GetAll")]
-        public ActionResult<IEnumerable<MdlTimeRecord>> GetAll()
+        public ActionResult<IEnumerable<MdlCalendarEvent>> GetAll()
         {
             try
             {
@@ -32,7 +31,7 @@ namespace StudySync.Controllers
         }
 
         [HttpGet("GetOneById/{Id}")]
-        public ActionResult<MdlTimeRecord> GetOneById(int Id)
+        public ActionResult<MdlCalendarEvent> GetOneById(int Id)
         {
             try
             {
@@ -52,7 +51,7 @@ namespace StudySync.Controllers
         }
 
         [HttpGet("GetAllByUserId/{UserId}")]
-        public ActionResult<MdlTimeRecord> GetAllByUserId(int UserId)
+        public ActionResult<MdlCalendarEvent> GetAllByUserId(int UserId)
         {
             try
             {
@@ -71,59 +70,8 @@ namespace StudySync.Controllers
             }
         }
 
-        // [HttpGet("GetAllByDate/{date}")]
-        // public ActionResult<IEnumerable<MdlTimeRecord>> GetAllByDate(string date)
-        // {
-        //     return Ok(_svc.GetAllByDate(date));
-        // }
-
-        [HttpGet("GetAllByCategory/{Category}")]
-        public ActionResult<IEnumerable<MdlTimeRecord>> GetAllByCategory(string Category)
-        {
-            try
-            {
-                var res = _svc.GetAllByCategory(Category);
-
-                return Ok(res);
-            }
-            catch (Exception exc)
-            {
-                return BadRequest(exc.Message);
-            }
-        }
-
-        [HttpGet("GetAllByTag/{Tag}")]
-        public ActionResult<IEnumerable<MdlTimeRecord>> GetAllByTag(string Tag)
-        {
-            try
-            {
-                var res = _svc.GetAllByTag(Tag);
-
-                return Ok(res);
-            }
-            catch (Exception exc)
-            {
-                return BadRequest(exc.Message);
-            }
-        }
-
-        [HttpGet("GetAllByIsProductive/{IsProductive}")]
-        public ActionResult<IEnumerable<MdlTimeRecord>> GetAllByIsProductive(bool IsProductive)
-        {
-            try
-            {
-                var res = _svc.GetAllByIsProductive(IsProductive);
-
-                return Ok(res);
-            }
-            catch (Exception exc)
-            {
-                return BadRequest(exc.Message);
-            }
-        }
-
         [HttpPost("Create")]
-        public ActionResult<MdlTimeRecord> Create([FromBody] RqtTimeRecord rqt)
+        public ActionResult<MdlCalendarEvent> Create([FromBody] RqtCalendarEvent rqt)
         {
             try
             {
@@ -138,7 +86,7 @@ namespace StudySync.Controllers
         }
 
         [HttpPut("Update/{Id}")]
-        public ActionResult<MdlTimeRecord> Update(int Id, [FromBody] RqtTimeRecord rqt)
+        public ActionResult<MdlCalendarEvent> Update(int Id, [FromBody] RqtCalendarEvent rqt)
         {
             try
             {

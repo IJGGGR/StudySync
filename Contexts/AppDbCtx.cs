@@ -9,8 +9,9 @@ namespace StudySync.Contexts
 {
     public class AppDbCtx(DbContextOptions<AppDbCtx> opt) : DbContext(opt)
     {
-        // public DbSet<MdlBlogItem> TblBlogItem { get; set; }
-        public DbSet<MdlTimeRecord> TblTimeRecord { get; set; }
-        public DbSet<MdlUser> TblUser { get; set; }
+        // public DbSet<MdlBlogItem>       TblBlogItem         { get; set; }
+        public DbSet<MdlCalendarEvent>  TblCalendarEvent    { get; set; }
+        public DbSet<MdlTimeRecord>     TblTimeRecord       { get; set; }
+        public DbSet<MdlUser>           TblUser             { get; set; }
     }
 }

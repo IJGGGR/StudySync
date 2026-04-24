@@ -33,6 +33,7 @@ builder.Services.AddAuthentication(o => {
 builder.Services.AddDbContext<AppDbCtx>(o => o.UseSqlServer(builder.Configuration.GetConnectionString("DatabaseConnection")));
 
 // builder.Services.AddScoped<SvcBlogItem>();
+builder.Services.AddScoped<SvcCalendar>();
 builder.Services.AddScoped<SvcTimeRecord>();
 builder.Services.AddScoped<SvcUser>();
 

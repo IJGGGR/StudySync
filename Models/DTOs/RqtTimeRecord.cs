@@ -7,12 +7,12 @@ namespace StudySync.Models.DTOs
 {
     public class RqtTimeRecord
     {
-        public int UserId { get; set; }
-        public DateTime Started { get; set; }
-        public DateTime Stopped { get; set; }
-        public TimeSpan Goal { get; set; }
-        public required string Category { get; set; }
-        public string[] Tags { get; set; } = [];
-        public bool IsProductive { get; set; }
+        public required int         UserId          { get; set; }
+        public required DateTime    Started         { get; set; }
+        public required DateTime    Stopped         { get; set; }
+        public required TimeSpan    Goal            { get; set; }
+        public required string      Category        { get; set; }
+        public required string[]    Tags            { get; set; }
+        public required bool        IsProductive    { get; set; }
     }
 }
